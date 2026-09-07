@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="self_ns" default="/uav0/mavros"/>
+
+  <arg name="image_topic"  default="/iris_depth_camera_0/camera/rgb/image_raw"/>
+  <arg name="detect_topic" default="/camera_detect_result"/>
+
+  <arg name="yolo_model_path"
+       default="$(find uav_vision_dectect)/model/yolov5/yolov5n.onnx"/>
+  <arg name="allowed_class_ids" default="0,2,4"/>
+  <arg name="accept_score_threshold" default="0.5"/>
+  <arg name="enable_tracking" default="true"/>
+  <arg name="force_fp16_input" default="true"/>
+  <arg name="force_fp16_output" default="true"/>
+
+  <arg name="lighttrack_init_model"
+       default="$(find uav_vision_dectect)/model/light_track/lighttrack_init"/>
+  <arg name="lighttrack_update_model"
+       default="$(find uav_vision_dectect)/model/light_track/lighttrack_update"/>
+
+  <node pkg="uav_vision_dectect" type="uav_vision_dectect" name="uav_vision_dectect"
+        output="screen">
+    <param name="self_ns"                 value="$(arg self_ns)"/>
+    <param name="image_topic"             value="$(arg image_topic)"/>
+    <param name="detect_topic"            value="$(arg detect_topic)"/>
+    <param name="yolo_model_path"         value="$(arg yolo_model_path)"/>
+    <param name="allowed_class_ids"       value="$(arg allowed_class_ids)"/>
+    <param name="accept_score_threshold"  value="$(arg accept_score_threshold)"/>
+    <param name="enable_tracking"         value="$(arg enable_tracking)"/>
+    <param name="force_fp16_input"        value="$(arg force_fp16_input)"/>
+    <param name="force_fp16_output"       value="$(arg force_fp16_output)"/>
+    <param name="lighttrack_init_model"   value="$(arg lighttrack_init_model)"/>
+    <param name="lighttrack_update_model" value="$(arg lighttrack_update_model)"/>
+  </node>
+</launch>
